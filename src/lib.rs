@@ -41,11 +41,14 @@ where
 pub trait CanonicalOrd {
     fn canonical_cmp(&self, other: &Self) -> Ordering;
 
-    /// Ordering fore deduplication.
+    /// Ordering for deduplication.
     ///
-    /// Only used for disambiguation, i.e. Will be chained with
-    /// `canonical_cmp()`. Should return `Ordering::Less` for items
-    /// that should take precedence during deduplication.
+    /// Only used for disambiguation, i.e. will be chained after
+    /// the primary comparison `canonical_cmp()`.
+    ///
+    /// Should return [`Ordering::Less`] for items that should take
+    /// precedence during deduplication. A result of [`Ordering::Equal`]
+    /// will eventually cause the removal of one of the items.
     fn canonical_dedup_cmp(&self, other: &Self) -> Ordering {
         debug_assert_eq!(Ordering::Equal, self.canonical_cmp(other));
         Ordering::Equal
@@ -53,6 +56,7 @@ pub trait CanonicalOrd {
 }
 
 pub trait IsCanonical {
+    /// Check if the representation of `self` is canonical.
     fn is_canonical(&self) -> bool;
 }
 
@@ -103,6 +107,11 @@ where
 }
 
 pub trait Canonicalize: IsCanonical {
+    /// Mutate `self` into a canonical representation.
+    ///
+    /// Afterwards [`IsCanonical::is_canonical()`] must return `true`
+    /// and you could enclose `self` into `Canonical` using either
+    /// [`Canonical::tie()`] or [`Canonical::tie_unchecked()`].
     fn canonicalize(&mut self);
 }
 
@@ -110,6 +119,10 @@ pub trait CanonicalizeInto<T>
 where
     T: Sized,
 {
+    /// Transform `self` into a canonical representation.
+    ///
+    /// The type of the underlying canonical representation might
+    /// differ from `Self`. Often both types are identical.
     #[must_use]
     fn canonicalize_into(self) -> Canonical<T>;
 }
@@ -169,6 +182,15 @@ where
     #[must_use]
     pub fn tie(canonical: T) -> Self {
         debug_assert!(canonical.is_canonical());
+        Self(canonical)
+    }
+
+    /// Enclose the argument into an immutable `Canonical` envelope.
+    ///
+    /// `const fn` version of [`Canonical::tie()`] without a debug assertion.
+    /// Use deliberately!
+    #[must_use]
+    pub const fn tie_unchecked(canonical: T) -> Self {
         Self(canonical)
     }
 
