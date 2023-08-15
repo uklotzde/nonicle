@@ -3,7 +3,7 @@
 
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
-name: continuous-integration
+name: build-and-test
 
 on:
   pull_request:
@@ -16,8 +16,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  continuous-integration:
-    name: Building project and running tests
+  run:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +28,9 @@ jobs:
 
       - name: Cache Rust toolchain and build artifacts
         uses: Swatinem/rust-cache@v2
+        with:
+          # The cache should not be shared between different workflows and jobs.
+          shared-key: ${{ github.workflow }}-${{ github.job }}
 
       - name: Generate Cargo.lock
         uses: actions-rs/cargo@v1

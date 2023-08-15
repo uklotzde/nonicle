@@ -13,7 +13,7 @@ setup:
     # cargo-edit is needed for `cargo upgrade`
     cargo install just cargo-edit
     pip install -U pre-commit
-    pre-commit install --hook-type commit-msg --hook-type pre-commit
+    #pre-commit install --hook-type commit-msg --hook-type pre-commit
 
 # Upgrade (and update) dependencies
 upgrade: setup
@@ -30,7 +30,7 @@ pre-commit:
     pre-commit run --all-files
 
 # Run build checks
-check:
+clippy:
     cargo clippy --locked --workspace --all-targets -- -D warnings
     cargo clippy --locked --workspace --no-default-features --all-targets -- -D warnings
     cargo clippy --locked --workspace --all-features --all-targets -- -D warnings
