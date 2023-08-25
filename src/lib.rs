@@ -153,7 +153,7 @@ where
     T: Canonicalize + CanonicalOrd,
 {
     fn canonicalize(&mut self) {
-        for elem in self.iter_mut() {
+        for elem in &mut *self {
             elem.canonicalize();
         }
         self.sort_unstable_by(|lhs, rhs| {

@@ -33,36 +33,19 @@ jobs:
           shared-key: ${{ github.workflow }}-${{ github.job }}
 
       - name: Generate Cargo.lock
-        uses: actions-rs/cargo@v1
-        with:
-          command: generate-lockfile
+        run: cargo generate-lockfile
 
       - name: Build tests with default features disabled
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --locked --no-default-features --no-run
+        run: cargo test --workspace --locked --no-default-features --no-run
 
       - name: Build tests with all features enabled
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --locked --all-features --no-run
+        run: cargo test --workspace --locked --all-features --no-run
 
       - name: Run tests with all features enabled
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --locked --all-features -- --nocapture --quiet
+        run: cargo test --workspace --locked --all-features -- --nocapture --quiet
 
       - name: Build workspace documentation with all features enabled
-        uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --workspace --locked --all-features
+        run: cargo doc --workspace --locked --all-features
 
       - name: Build release with default features
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --locked --profile release
+        run: cargo build --locked --profile release
