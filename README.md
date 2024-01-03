@@ -7,7 +7,7 @@
 [![Docs.rs](https://docs.rs/nonicle/badge.svg)](https://docs.rs/nonicle)
 [![Deps.rs](https://deps.rs/repo/github/uklotzde/nonicle/status.svg)](https://deps.rs/repo/github/uklotzde/nonicle)
 [![Security audit](https://github.com/uklotzde/nonicle/actions/workflows/security-audit.yaml/badge.svg)](https://github.com/uklotzde/nonicle/actions/workflows/security-audit.yaml)
-[![Continuous integration](https://github.com/uklotzde/nonicle/actions/workflows/continuous-integration.yaml/badge.svg)](https://github.com/uklotzde/nonicle/actions/workflows/continuous-integration.yaml)
+[![Continuous integration](https://github.com/uklotzde/nonicle/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/uklotzde/nonicle/actions/workflows/build-and-test.yaml)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 Tools for type-safe, canonical data representations.
