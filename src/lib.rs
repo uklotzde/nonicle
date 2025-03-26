@@ -55,7 +55,7 @@ where
     T: IsCanonical,
 {
     fn is_canonical(&self) -> bool {
-        self.as_ref().map_or(true, T::is_canonical)
+        self.as_ref().is_none_or(T::is_canonical)
     }
 }
 
