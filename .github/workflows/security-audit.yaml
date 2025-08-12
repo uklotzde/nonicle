@@ -26,7 +26,7 @@ jobs:
 
       # Checkout the repository before the remaining steps that depend on it.
       # All preceding steps are independent of the repository contents.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
 
